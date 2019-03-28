@@ -28,7 +28,7 @@ public class ContatoDAO {
 		ps = con.prepareStatement(sql);
 		ps.setString(1, c.getNome());
 		ps.setString(2, c.getTelefone());
-		ps.setInt(3, c.getOperadora().getCodOperadora());
+		ps.setInt(3, c.getOperadora().getCodigo());
 		
 		//executa o sql e retorna o resultado
 		return ps.executeUpdate() > 0;

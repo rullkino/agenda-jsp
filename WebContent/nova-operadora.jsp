@@ -19,6 +19,8 @@
 		<form method="post" action="ProcessaContato">
 			
 			<input type="text" placeholder="Nome" name="nome" id="nome"
+				class="form-control"> <br>
+				<input type="text" placeholder="Nome" name="codigo" id="codigo"
 				class="form-control"> <br> 
 			
 			<button type="button" id="salvar" class="btn btn-primary">Salvar</button>

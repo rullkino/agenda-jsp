@@ -1,5 +1,7 @@
+<%@page import="vo.Operadora"%>
+<%@page import="dao.ContatoDAO"%>
+<%@page import="dao.OperadoraDAO"%>
 <%@page import="controller.Mensagem"%>
-<%@page import="controller.Agenda"%>
 <%@page import="vo.Contato"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -48,11 +50,12 @@
 				  <select class="custom-select"  id="operadoras" name="operadora">
 				    <option selected value="">Selecione</option>
 					<%
+					OperadoraDAO oDao = new OperadoraDAO();
 						//recupera a lista
-						List<String> ops = Agenda.getOperadoras();
+						List<Operadora> ops = oDao.listarTodas();
 						//percorre a lista preenchendo as opções do select
-						for(String o : ops){
-							out.print("<option>" + o + "</option>");
+						for(Operadora o : ops){
+							out.print("<option>" + o.getNome() + "</option>");
 						}
 					%>
 				  </select>
@@ -98,7 +101,8 @@
 			</thead>
 			<tbody>
 				<%
-					List<Contato> lista = Agenda.getAgenda();
+				ContatoDAO cDao = new ContatoDAO();
+					List<Contato> lista = cDao.listarTodos();
 					if (lista.isEmpty()) {
 						out.print("<tr><td colspan=3>Não há contatos</td></tr>");
 					}
