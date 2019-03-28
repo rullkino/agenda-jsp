@@ -81,6 +81,8 @@
 						<div class="modal-body">
 							<input type="text" name="operadora" id="nova-operadora"
 								class="form-control" placeholder="Operadora">
+								<input type="text" name="codigo" id="nova-operadora"
+								class="form-control" placeholder="código operadora">
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
