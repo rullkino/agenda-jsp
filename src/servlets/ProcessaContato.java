@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import controller.Agenda;
 import controller.Mensagem;
+import dao.ContatoDAO;
 import vo.Contato;
 import vo.Operadora;
 
@@ -34,9 +36,23 @@ public class ProcessaContato extends HttpServlet {
 		op.setNome(request.getParameter("operadora"));
 		p.setOperadora(op);
 		
-		Agenda.getAgenda().add(p);
-		
-		Mensagem.addMensagem("Contato salvo com sucesso");
+		if(p.getNome().equals("")){
+			Mensagem.addMensagem("Campo 'Nome' obrigatorio");
+		}else if(p.getTelefone().equals("")) {
+			Mensagem.addMensagem("Campo 'Telefone' obrigatorio");
+		}else if(!p.getNome().equals("")||!p.getTelefone().equals("")) {
+			ContatoDAO cDao = new ContatoDAO();
+			try {
+				if(cDao.inserir(p)) {
+					Mensagem.addMensagem("Contato salvo com sucesso");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else {
+			Mensagem.addMensagem("Erro ao salvar");
+		}
 		
 		response.sendRedirect("inicial.jsp");
 		

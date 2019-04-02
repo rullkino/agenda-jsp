@@ -55,16 +55,15 @@
 						List<Operadora> ops = oDao.listarTodas();
 						//percorre a lista preenchendo as opções do select
 						for(Operadora o: ops){
-							if(o.getNome() != ""){
 								out.println("<option>"+o.getNome()+"<option>");
-							}
 						}
 					%>
 				  </select>
 				  <div class="input-group-append">
 				    <button class="btn btn-outline-secondary"  type="button" data-toggle="modal" data-target="#modal-nova-operadora">+</button>
 				  </div>
-				</div><br>
+				</div>
+				<br>
 			<button type="submit" id="salvar" class="btn btn-primary">Salvar</button>
 		</form>
 		<hr>
