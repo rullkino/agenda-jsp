@@ -34,27 +34,27 @@ public class OperadoraDAO {
 	}
 	
 	public List<Operadora> listarTodas(){
-		
+		List<Operadora> operadoras = new ArrayList<>();
 		try {
 			String sql = " SELECT * FROM operadora ";
 			con = ConnectionDB.getConnection();
 			ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
-			List<Operadora> operadoras = new ArrayList<>();
+			
 			while(rs.next()){
 				Operadora op = new Operadora();
-				op.setCodOperadora(rs.getInt("cod_operadora"));
+				op.setCodOperadora(rs.getInt("cod_operadora")); 
 				op.setNome(rs.getString("nome"));
 				op.setCodigo(rs.getInt("codigo"));
-				
+				operadoras.add(op);
 			}
-			return operadoras;
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
 		}
+		return operadoras;
 			
 	}
 

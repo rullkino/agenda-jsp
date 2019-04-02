@@ -54,8 +54,10 @@
 						//recupera a lista
 						List<Operadora> ops = oDao.listarTodas();
 						//percorre a lista preenchendo as opções do select
-						for(Operadora o : ops){
-							out.print("<option>" + o.getNome() + "</option>");
+						for(Operadora o: ops){
+							if(o.getNome() != ""){
+								out.println("<option>"+o.getNome()+"<option>");
+							}
 						}
 					%>
 				  </select>
