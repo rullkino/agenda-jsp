@@ -34,14 +34,20 @@ public class ProcessaContato extends HttpServlet {
 		p.setNome(request.getParameter("nome").trim());
 		p.setTelefone(request.getParameter("telefone").trim());
 		String operadora = request.getParameter("operadora").trim();
-		OperadoraDAO oDao = new OperadoraDAO();
-		p.setOperadora(oDao.retornaOperadora(operadora));
+		
 		
 		if(p.getNome().equals("")){
 			Mensagem.addMensagem("Campo 'Nome' obrigatorio");
+			
 		}else if(p.getTelefone().equals("")) {
 			Mensagem.addMensagem("Campo 'Telefone' obrigatorio");
+			
+		}else if(operadora.equals("")) {
+			Mensagem.addMensagem("Selecione uma operadora");
+			
 		}else{
+			OperadoraDAO oDao = new OperadoraDAO();
+			p.setOperadora(oDao.retornaOperadora(operadora));
 			ContatoDAO cDao = new ContatoDAO();
 			try {
 				if(cDao.inserir(p)) {
@@ -51,11 +57,10 @@ public class ProcessaContato extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				Mensagem.addMensagem("Erro ao salvar");
+				
 			}
-		response.sendRedirect("inicial.jsp");
-		
 		}
-
+		response.sendRedirect("inicial.jsp");
 	}
 }
 
