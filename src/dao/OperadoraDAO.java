@@ -33,6 +33,33 @@ public class OperadoraDAO {
 		
 	}
 	
+	public Operadora retornaOperadora(String operadora) {
+		
+		Operadora o = new Operadora();
+		
+		
+		String sql = " SELECT * FROM operadora where nome = ?";
+		con = ConnectionDB.getConnection();
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1,operadora);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				o.setCodOperadora(rs.getInt("cod_operadora")); 
+				o.setNome(rs.getString("nome"));
+				o.setCodigo(rs.getInt("codigo"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return o;
+		
+	}
+	
 	public List<Operadora> listarTodas(){
 		List<Operadora> operadoras = new ArrayList<>();
 		try {

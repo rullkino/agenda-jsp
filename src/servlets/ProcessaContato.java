@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import controller.Agenda;
 import controller.Mensagem;
 import dao.ContatoDAO;
+import dao.OperadoraDAO;
 import vo.Contato;
 import vo.Operadora;
 
@@ -30,17 +31,17 @@ public class ProcessaContato extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Contato p = new Contato();
-		p.setNome(request.getParameter("nome"));
-		p.setTelefone(request.getParameter("telefone"));
-		Operadora op = new Operadora();
-		op.setNome(request.getParameter("operadora"));
-		p.setOperadora(op);
+		p.setNome(request.getParameter("nome").trim());
+		p.setTelefone(request.getParameter("telefone").trim());
+		String operadora = request.getParameter("operadora").trim();
+		OperadoraDAO oDao = new OperadoraDAO();
+		p.setOperadora(oDao.retornaOperadora(operadora));
 		
 		if(p.getNome().equals("")){
 			Mensagem.addMensagem("Campo 'Nome' obrigatorio");
 		}else if(p.getTelefone().equals("")) {
 			Mensagem.addMensagem("Campo 'Telefone' obrigatorio");
-		}else if(!p.getNome().equals("")||!p.getTelefone().equals("")) {
+		}else{
 			ContatoDAO cDao = new ContatoDAO();
 			try {
 				if(cDao.inserir(p)) {
@@ -49,16 +50,15 @@ public class ProcessaContato extends HttpServlet {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				Mensagem.addMensagem("Erro ao salvar");
 			}
-		}else {
-			Mensagem.addMensagem("Erro ao salvar");
-		}
-		
 		response.sendRedirect("inicial.jsp");
 		
-	}
+		}
 
+	}
 }
+
 
 
 
